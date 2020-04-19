@@ -189,7 +189,7 @@ func setupGovGenesis(defaultGenesis map[string]json.RawMessage, keys KeysFile) {
 		panic(err)
 	}
 	mACL := createDummyACL(b)
-	govGenesisObj.Params.ACL = govTypes.BaseACL{M: mACL.GetAll()}
+	govGenesisObj.Params.ACL = mACL
 	govGenesisObj.Params.DAOOwner = b
 	govGenesisObj.Params.Upgrade = govTypes.Upgrade{
 		Height:  0,
@@ -200,8 +200,8 @@ func setupGovGenesis(defaultGenesis map[string]json.RawMessage, keys KeysFile) {
 }
 
 func createDummyACL(addr sdk.Address) govTypes.ACL {
-	acl := &govTypes.NonMapACL{}
-	*acl = make([]govTypes.ACLPair, 0)
+	acl := govTypes.ACL{}
+	acl = make([]govTypes.ACLPair, 0)
 	acl.SetOwner("auth/MaxMemoCharacters", addr)
 	acl.SetOwner("auth/TxSigLimit", addr)
 	acl.SetOwner("gov/daoOwner", addr)
@@ -231,9 +231,6 @@ func createDummyACL(addr sdk.Address) govTypes.ACL {
 	acl.SetOwner("application/MaxApplications", addr)
 	acl.SetOwner("gov/daoOwner", addr)
 	acl.SetOwner("gov/upgrade", addr)
-
-	acl.SetOwner("bank/sendenabled", addr)
-	acl.SetOwner("auth/TxSizeCostPerByte", addr)
 	return acl
 }
 
