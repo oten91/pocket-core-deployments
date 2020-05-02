@@ -73,6 +73,7 @@ type Environment struct {
 	Key        string `yaml:"POCKET_CORE_KEY"`
 	Seeds      string `yaml:"POCKET_CORE_SEEDS"`
 	Passphrase string `yaml:"POCKET_CORE_PASSPHRASE"`
+	Address    string `yaml:"POCKET_ADDRESS"`
 }
 
 func GenDockerConfig(homeDir string, keys KeysFile) {
@@ -112,6 +113,7 @@ func GenDockerConfig(homeDir string, keys KeysFile) {
 			Key:        nodeKey.Priv,
 			Seeds:      seedString,
 			Passphrase: PocketCorePassphrase,
+			Address:    nodeKey.Addr,
 		}
 		tn.Environment = ks
 		dockerComposeFile.Services[fmt.Sprintf("pocket-core-testnet%d", i)] = tn

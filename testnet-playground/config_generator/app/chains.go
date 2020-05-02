@@ -4,25 +4,15 @@ import (
 	"github.com/pokt-network/pocket-core/x/pocketcore/types"
 	"io/ioutil"
 	"path/filepath"
-	"strings"
 )
 
 var (
 	fs = string(filepath.Separator)
 )
 
-func GenChains(homeDir, ethereumURL, bitcoinURL string) string {
-	hbs := types.HostedBlockchains{M: map[string]types.HostedBlockchain{
-		ethereum: {
-			Hash: ethereum,
-			URL:  strings.TrimSuffix(ethereumURL, "\n"),
-		},
-		bitcoin: {
-			Hash: bitcoin,
-			URL:  strings.TrimSuffix(bitcoinURL, "\n"),
-		},
-	}}
-	chainsJSON, er := types.ModuleCdc.MarshalJSONIndent(hbs.M, "", "    ")
+func GenChains(homeDir string, chains []types.HostedBlockchain) string {
+
+	chainsJSON, er := types.ModuleCdc.MarshalJSONIndent(chains, "", "    ")
 	if er != nil {
 		panic(er)
 	}

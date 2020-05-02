@@ -27,27 +27,8 @@ var (
 
 func init() {
 	// setup two non native chains
-	var err error
-	ethereum, err = pocketTypes.NonNativeChain{
-		Ticker:  "eth",
-		Netid:   "4",
-		Version: "v1.9.9",
-		Client:  "",
-		Inter:   "",
-	}.HashString()
-	if err != nil {
-		panic(err)
-	}
-	bitcoin, err = pocketTypes.NonNativeChain{
-		Ticker:  "btc",
-		Netid:   "1",
-		Version: "0.19.0.1",
-		Client:  "",
-		Inter:   "",
-	}.HashString()
-	if err != nil {
-		panic(err)
-	}
+	ethereum = "0011"
+	bitcoin = "0022"
 }
 
 func GenGenesis(homeDir string, keys KeysFile, minutesTillGenesisStart int) string {
@@ -188,6 +169,7 @@ func setupGovGenesis(defaultGenesis map[string]json.RawMessage, keys KeysFile) {
 	if err != nil {
 		panic(err)
 	}
+	a
 	mACL := createDummyACL(b)
 	govGenesisObj.Params.ACL = mACL
 	govGenesisObj.Params.DAOOwner = b
@@ -214,6 +196,7 @@ func createDummyACL(addr sdk.Address) govTypes.ACL {
 	acl.SetOwner("application/ApplicationStakeMinimum", addr)
 	acl.SetOwner("pocketcore/ClaimExpiration", addr)
 	acl.SetOwner("pocketcore/SessionNodeCount", addr)
+	acl.SetOwner("pocketcore/ReplayAttackBurnMultiplier", addr)
 	acl.SetOwner("pos/MaxValidators", addr)
 	acl.SetOwner("pos/ProposerPercentage", addr)
 	acl.SetOwner("application/StabilityAdjustment", addr)
@@ -227,7 +210,7 @@ func createDummyACL(addr sdk.Address) govTypes.ACL {
 	acl.SetOwner("pocketcore/ClaimSubmissionWindow", addr)
 	acl.SetOwner("pos/DAOAllocation", addr)
 	acl.SetOwner("pos/SignedBlocksWindow", addr)
-	acl.SetOwner("pos/SessionBlockFrequency", addr)
+	acl.SetOwner("pos/BlocksPerSession", addr)
 	acl.SetOwner("application/MaxApplications", addr)
 	acl.SetOwner("gov/daoOwner", addr)
 	acl.SetOwner("gov/upgrade", addr)

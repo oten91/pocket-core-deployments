@@ -1,10 +1,11 @@
 package main
 
 import (
-	"bufio"
 	"errors"
 	"fmt"
 	"github.com/pokt-network/pocket-core-deployments/testnet-playground/config_generator/app"
+	app2 "github.com/pokt-network/pocket-core/app"
+	"github.com/pokt-network/pocket-core/x/pocketcore/types"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -38,26 +39,26 @@ If all genesis validators are not up, the network will never start`
 )
 
 var (
-	ReadInError            = errors.New(`Uh oh, an error occurred reading in the information: `)
-	fs                     = string(filepath.Separator)
+	ReadInError = errors.New(`Uh oh, an error occurred reading in the information: `)
+	fs          = string(filepath.Separator)
 )
 
 func main() {
 	setup(gatherParameters())
 }
 
-func setup(numberOfNodes, numberOfApps, numberOfAccounts, minutesTillGenesisStart int, ethereumURL, bitcoinURL string) {
+func setup(numberOfNodes, numberOfApps, numberOfAccounts, minutesTillGenesisStart int, hostedchains []types.HostedBlockchain) {
 	home := generateTestnetHome()
 	keys := app.GenKeys(home, numberOfNodes, numberOfApps, numberOfAccounts)
-	genesis:= app.GenGenesis(home, keys, minutesTillGenesisStart)
-	chains := app.GenChains(home, ethereumURL, bitcoinURL)
+	genesis := app.GenGenesis(home, keys, minutesTillGenesisStart)
+	chains := app.GenChains(home, hostedchains)
 	app.GenDockerConfig(home, keys)
 	app.WriteLocalCmd(home)
 	app.NewKubenetesFile(home, keys, chains, genesis)
 	app.GenFinishedMessages(keys)
 }
 
-func gatherParameters() (numberOfNodes, numberOfApps, numberOfAccounts, minutesTillGenesisStart int, ethereumURL, bitcoinURL string) {
+func gatherParameters() (numberOfNodes, numberOfApps, numberOfAccounts, minutesTillGenesisStart int, chains []types.HostedBlockchain) {
 	fmt.Println(WelcomMessage)
 	fmt.Println(NumberOfNodesPrompt)
 	_, err := fmt.Scanf("%d", &numberOfNodes)
@@ -77,19 +78,7 @@ func gatherParameters() (numberOfNodes, numberOfApps, numberOfAccounts, minutesT
 		fmt.Println(ReadInError.Error() + err.Error())
 		os.Exit(1)
 	}
-	fmt.Println(URLForEthereumNodePrompt)
-	reader := bufio.NewReader(os.Stdin)
-	ethereumURL, err = reader.ReadString('\n')
-	if err != nil {
-		fmt.Println(ReadInError.Error() + err.Error())
-		os.Exit(1)
-	}
-	fmt.Println(URLForBitcoinNodePrompt)
-	bitcoinURL, err = reader.ReadString('\n')
-	if err != nil {
-		fmt.Println(ReadInError.Error() + err.Error())
-		os.Exit(1)
-	}
+	chains = app2.GenerateHostedChains()
 	fmt.Println(MinutesTillGenesisPrompt)
 	_, err = fmt.Scanf("%d", &minutesTillGenesisStart)
 	if err != nil {

@@ -41,6 +41,8 @@ const (
 	PCKey                    = "POCKET_CORE_KEY"
 	PCPassPhrase             = "POCKET_CORE_PASSPHRASE"
 	PCPassphraseKey          = "pocket_core_passphrase"
+	PCAddress                = "POCKET_ADDRESS"
+	PCAddressKey             = "pocket_address"
 	Chains                   = "POCKET_CORE_CHAINS"
 	PCChainsKey              = "pocket_core_chains"
 	PCGenesis                = "POCKET_CORE_GENESIS"
@@ -138,6 +140,13 @@ func NewKubenetesFile(homeDir string, keys KeysFile, chainsJSON string, genesisJ
 				ValueFrom: ValueFrom{ConfigMapKeyRef{
 					Name: PocketCoreTestnet,
 					Key:  PCPassphraseKey,
+				}},
+			},
+			EnvValueFrom{
+				Name: PCAddress,
+				ValueFrom: ValueFrom{ConfigMapKeyRef{
+					Name: PocketCoreTestnet,
+					Key:  PCAddressKey,
 				}},
 			},
 			EnvValueFrom{
@@ -316,6 +325,7 @@ type ConfigMapItem struct {
 type Data struct {
 	PocketCoreSeeds      string `yaml:"pocket_core_seeds"`
 	PocketCorePassphrase string `yaml:"pocket_core_passphrase"`
+	PocketAddress        string `yaml:"pocket_address"`
 	PocketCoreChains     string `yaml:"pocket_core_chains"`
 	PocketCoreGenesis    string `yaml:"pocket_core_genesis"`
 }

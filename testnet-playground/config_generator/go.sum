@@ -157,8 +157,12 @@ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZb
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/pokt-network/pocket-core v0.0.0-20200417222227-b7983511d5ff h1:PV99UE4UgS3eoWQa8Odcv08ivD1VD1TXGsS9xCKZj1M=
 github.com/pokt-network/pocket-core v0.0.0-20200417222227-b7983511d5ff/go.mod h1:d3PumRViiwp0zqDOG908SsXUUR8BgOk0ZC8Cgu8vyAs=
+github.com/pokt-network/pocket-core v0.0.0-20200501213635-04abb928f7f4 h1:utrj/DE3uA/HVbZAaY75feEj+ywQV9FWunInGApZ5d0=
+github.com/pokt-network/pocket-core v0.0.0-20200501213635-04abb928f7f4/go.mod h1:9rPhzqMHEZ5ZUGSey7zH/O1yxgk/CW0vVjp/SDPUdR0=
 github.com/pokt-network/posmint v0.0.0-20200417215711-e2afb3f483f3 h1:ii8UzHXX86pPfsszQOLaPAjKEGvmPv+hONLI36rPo48=
 github.com/pokt-network/posmint v0.0.0-20200417215711-e2afb3f483f3/go.mod h1:/Q6zRipV1L9ZML5kGMP5+J5lMoo+B/njn5ncf4gpIrc=
+github.com/pokt-network/posmint v0.0.0-20200501172915-056faadb2476 h1:A0q+nhoD7Ni9cFVcGr4oHQ8C3VxmpZS7bZiHEMwiNaQ=
+github.com/pokt-network/posmint v0.0.0-20200501172915-056faadb2476/go.mod h1:/Q6zRipV1L9ZML5kGMP5+J5lMoo+B/njn5ncf4gpIrc=
 github.com/pokt-network/tendermint v0.32.11-0.20200416214829-c67ffb7bf00f h1:einsDo1okTcUPYYYYiC8MfDRHsD7IKI/6dnlTymWc6Q=
 github.com/pokt-network/tendermint v0.32.11-0.20200416214829-c67ffb7bf00f/go.mod h1:klZB7nl3GZZ9jPNaNHPYjNyoWW7mMx+5AXAN8Ov7bmY=
 github.com/prometheus/client_golang v0.9.1/go.mod h1:7SWBe2y4D6OKWSNQJUaRYU/AaXPKyh/dDVn+NZz0KFw=
@@ -197,9 +201,11 @@ github.com/spaolacci/murmur3 v0.0.0-20180118202830-f09979ecbc72/go.mod h1:JwIasO
 github.com/spf13/afero v1.1.2/go.mod h1:j4pytiNVoe2o6bmDsKpLACNPDBIoEAkihy7loJ1B0CQ=
 github.com/spf13/cast v1.3.0/go.mod h1:Qx5cxh0v+4UWYiBimWS+eyWzqEqokIECu5etghLkUJE=
 github.com/spf13/cobra v0.0.1/go.mod h1:1l0Ry5zgKvJasoi3XT1TypsSe7PqH0Sj9dhYf7v3XqQ=
+github.com/spf13/cobra v0.0.5 h1:f0B+LkLX6DtmRH1isoNA9VTtNUK9K8xYd28JNNfOv/s=
 github.com/spf13/cobra v0.0.5/go.mod h1:3K3wKZymM7VvHMDS9+Akkh4K60UwM26emMESw8tLCHU=
 github.com/spf13/jwalterweatherman v1.0.0/go.mod h1:cQK4TGJAtQXfYWX+Ddv3mKDzgVb68N+wFjFa4jdeBTo=
 github.com/spf13/pflag v1.0.3/go.mod h1:DYY7MBk1bdzusC3SYhjObp+wFpr4gzcvqqNjLnInEg4=
+github.com/spf13/pflag v1.0.5 h1:iy+VFUOCP1a+8yFto/drg2CJ5u0yRoB7fZw3DKv/JXA=
 github.com/spf13/pflag v1.0.5/go.mod h1:McXfInJRrz4CZXVZOBLb0bTZqETkiAhM9Iw0y3An2Bg=
 github.com/spf13/viper v1.0.0/go.mod h1:A8kyI5cUJhb8N+3pkfONlcEcZbueH6nhAm0Fq7SrnBM=
 github.com/spf13/viper v1.3.2/go.mod h1:ZiWeW+zYFKm7srdB9IoDzzZXaJaI5eL9QjNiN/DMA2s=
