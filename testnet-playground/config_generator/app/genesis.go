@@ -169,7 +169,6 @@ func setupGovGenesis(defaultGenesis map[string]json.RawMessage, keys KeysFile) {
 	if err != nil {
 		panic(err)
 	}
-	a
 	mACL := createDummyACL(b)
 	govGenesisObj.Params.ACL = mACL
 	govGenesisObj.Params.DAOOwner = b
@@ -190,6 +189,7 @@ func createDummyACL(addr sdk.Address) govTypes.ACL {
 	acl.SetOwner("gov/acl", addr)
 	acl.SetOwner("pos/StakeDenom", addr)
 	acl.SetOwner("pocketcore/SupportedBlockchains", addr)
+	acl.SetOwner("pocketcore/MinimumNumberOfProofs", addr)
 	acl.SetOwner("pos/DowntimeJailDuration", addr)
 	acl.SetOwner("pos/SlashFractionDoubleSign", addr)
 	acl.SetOwner("pos/SlashFractionDowntime", addr)
@@ -200,6 +200,7 @@ func createDummyACL(addr sdk.Address) govTypes.ACL {
 	acl.SetOwner("pos/MaxValidators", addr)
 	acl.SetOwner("pos/ProposerPercentage", addr)
 	acl.SetOwner("application/StabilityAdjustment", addr)
+	acl.SetOwner("application/MaximumChains", addr)
 	acl.SetOwner("application/AppUnstakingTime", addr)
 	acl.SetOwner("application/ParticipationRateOn", addr)
 	acl.SetOwner("pos/MaxEvidenceAge", addr)
@@ -209,10 +210,12 @@ func createDummyACL(addr sdk.Address) govTypes.ACL {
 	acl.SetOwner("application/BaseRelaysPerPOKT", addr)
 	acl.SetOwner("pocketcore/ClaimSubmissionWindow", addr)
 	acl.SetOwner("pos/DAOAllocation", addr)
+	acl.SetOwner("pos/MaximumChains", addr)
+	acl.SetOwner("pos/MaxJailedBlocks", addr)
 	acl.SetOwner("pos/SignedBlocksWindow", addr)
 	acl.SetOwner("pos/BlocksPerSession", addr)
 	acl.SetOwner("application/MaxApplications", addr)
-	acl.SetOwner("gov/daoOwner", addr)
+	acl.SetOwner("pos/RelaysToTokensMultiplier", addr)
 	acl.SetOwner("gov/upgrade", addr)
 	return acl
 }
