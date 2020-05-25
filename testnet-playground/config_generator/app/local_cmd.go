@@ -16,6 +16,10 @@ if { $env(POCKET_CORE_KEY) eq "" }  {
     sleep 1
     send -- "yo\n"
     expect eof
+    spawn pocket-core accounts set-validator $env(POCKET_ADDRESS)
+    sleep 1
+    send -- "yo\n"
+    expect eof
     spawn pocket-core start --seeds $env(POCKET_CORE_SEEDS)
 }
 
