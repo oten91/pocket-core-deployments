@@ -286,10 +286,16 @@ github.com/pokt-network/pocket-core v0.0.0-20200520173550-37a5256ca69b h1:SnutFm
 github.com/pokt-network/pocket-core v0.0.0-20200520173550-37a5256ca69b/go.mod h1:NsLQyqGhGXIhyWkxCTNAdTrMPwDnvNT8NFYMmaH18Bo=
 github.com/pokt-network/pocket-core v0.0.0-20200522164925-0a90a043cc64 h1:ea7nbGO4lGTzsqKAiSzOcpnbhjQ/t6d2xQBXh29jhao=
 github.com/pokt-network/pocket-core v0.0.0-20200522164925-0a90a043cc64/go.mod h1:NsLQyqGhGXIhyWkxCTNAdTrMPwDnvNT8NFYMmaH18Bo=
+github.com/pokt-network/pocket-core v0.0.0-20200531204752-1f2e84c37b24 h1:mHrXWYEg0eCA8gCyBSgzAAEmhld/aK7BB/Z3jhAbcng=
+github.com/pokt-network/pocket-core v0.0.0-20200531204752-1f2e84c37b24/go.mod h1:Sj3vnxwZhc4x/ZhytjaGsAAoPieiX8z5jnlp9UTxVCk=
 github.com/pokt-network/posmint v0.0.0-20200519165031-947a85177d7b h1:X/LVDD8vbOkDJgqnsy/Px7HwNIRO6Gs1dqELlo3OQHg=
 github.com/pokt-network/posmint v0.0.0-20200519165031-947a85177d7b/go.mod h1:/Q6zRipV1L9ZML5kGMP5+J5lMoo+B/njn5ncf4gpIrc=
+github.com/pokt-network/posmint v0.0.0-20200531033107-bb115a2b2c5f h1:hiTM+NqWpYLRpGJOfVQE2tuzCxnToecM29B+uqFiL/M=
+github.com/pokt-network/posmint v0.0.0-20200531033107-bb115a2b2c5f/go.mod h1:mgue5LkgApWMs06PWjZz/npzh3dzC+r/VL3YnqgZSxo=
 github.com/pokt-network/tendermint v0.32.11-0.20200416214829-c67ffb7bf00f h1:einsDo1okTcUPYYYYiC8MfDRHsD7IKI/6dnlTymWc6Q=
 github.com/pokt-network/tendermint v0.32.11-0.20200416214829-c67ffb7bf00f/go.mod h1:klZB7nl3GZZ9jPNaNHPYjNyoWW7mMx+5AXAN8Ov7bmY=
+github.com/pokt-network/tendermint v0.32.11-0.20200529220336-c238eec5d1bb h1:Z5WdObyH6yX9AYCS0vEOwp5usUAhar1mHN7b4Zew0Bc=
+github.com/pokt-network/tendermint v0.32.11-0.20200529220336-c238eec5d1bb/go.mod h1:klZB7nl3GZZ9jPNaNHPYjNyoWW7mMx+5AXAN8Ov7bmY=
 github.com/posener/complete v1.1.1/go.mod h1:em0nMJCgc9GFtwrmVmEMR/ZL6WyhyjMBndrE9hABlRI=
 github.com/prometheus/client_golang v0.9.1/go.mod h1:7SWBe2y4D6OKWSNQJUaRYU/AaXPKyh/dDVn+NZz0KFw=
 github.com/prometheus/client_golang v0.9.3-0.20190127221311-3c4408c8b829/go.mod h1:p2iRAGwDERtqlqzRXnrOVns+ignqQo//hLXqYxZYVNs=
