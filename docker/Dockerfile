@@ -12,16 +12,12 @@ FROM ${GOLANG_IMAGE_VERSION} AS builder
 RUN apk -v --update --no-cache add \
 	curl \
 	git \
-	python \
-	py-pip \
 	groff \
 	less \
 	mailcap \
 	gcc \
 	libc-dev \
 	bash && \
-	pip install --upgrade --no-cache awscli s3cmd python-magic && \
-	apk -v --purge del py-pip && \
 	rm /var/cache/apk/* || true
 
 # Environment and system dependencies setup
