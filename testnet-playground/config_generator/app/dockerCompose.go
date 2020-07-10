@@ -27,6 +27,7 @@ const (
 	Volume1                   = "./local_command.sh:/home/app/.pocket/local_command.sh"
 	Volume2                   = "./chains.json:/home/app/.pocket/config/chains.json"
 	Volume3                   = "./genesis.json:/home/app/.pocket/config/genesis.json"
+	Volume4                   = "./config.json:/home/app/.pocket/config/config.json"
 )
 
 var (
@@ -94,7 +95,7 @@ func GenDockerConfig(homeDir string, keys KeysFile) {
 		Build:      Build,
 		Expose:     expose,
 		Networks:   []string{Network},
-		Volumes:    []string{Volume1, Volume2, Volume3},
+		Volumes:    []string{Volume1, Volume2, Volume3, Volume4},
 	}
 	for i, nodeKey := range keys.NodeKeys {
 		// edit structure tag
