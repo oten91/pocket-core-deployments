@@ -1,0 +1,11 @@
+{
+  "nodes": [
+    {
+      "private_key": "9ce09fc721086005ddfb050176c2303fd3c1b6af0d5dcfcb8c46b9aca1b1b0ab0dc399a8bdc703d22c6d45f68ff761b16d0a51d2e7c27506ae9d99fd8fcdf190",
+      "public_key": "0dc399a8bdc703d22c6d45f68ff761b16d0a51d2e7c27506ae9d99fd8fcdf190",
+      "address": "5F85BF95AAF3D2F7718570B522FE429A0A90D7C1"
+    }
+  ],
+  "apps": [],
+  "accs": []
+}

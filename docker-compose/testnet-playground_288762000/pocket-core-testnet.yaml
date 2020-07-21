@@ -1,0 +1,413 @@
+apiVersion: v1
+items:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+        annotations:
+            kompose.cmd: kompose convert -f docker-compose.yml -o geth.yml
+            kompose.version: 1.18.0 (06a2e56)
+        creationTimestamp: null
+        labels:
+            app: pocket-core-testnet
+            io.kompose.service: pocket-core-testnet
+        name: pocket-core-testnet
+    spec:
+        ports:
+          - name: http
+            protocol: TCP
+            port: "8081"
+            targetPort: "8081"
+          - name: peers
+            protocol: TCP
+            port: "46656"
+            targetPort: "46656"
+          - name: tendermint
+            protocol: TCP
+            port: "26657"
+            targetPort: "26657"
+          - name: tendermint-peers
+            protocol: TCP
+            port: "26656"
+            targetPort: "26656"
+        type: LoadBalancer
+        loadBalancerIP: 35.236.208.175
+        selector:
+            io.kompose.service: pocket-core-testnet
+    status:
+        loadBalancer: {}
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+        annotations:
+            kompose.cmd: kompose convert -f docker-compose.yml -o geth.yml
+            kompose.version: 1.18.0 (06a2e56)
+        creationTimestamp: null
+        labels:
+            app: pocket-core-testnet
+            io.kompose.service: pocket-core-testnet
+        name: pocket-core-testnet
+    spec:
+        replicas: "1"
+        selector:
+            matchLabels:
+                app: pocket-core-testnet
+        strategy:
+            type: Recreate
+        template:
+            metadata:
+                labels:
+                    app: pocket-core-testnet
+                    io.kompose.service: pocket-core-testnet
+                creationTimestamp: null
+            spec:
+                securityContext:
+                    fsGroup: "100"
+                containers:
+                    name: pocket-core-testnet
+                    args:
+                      - pocket-core start
+                      - --seeds
+                      - $(POCKET_CORE_SEEDS)
+                      - --blockTime=1
+                    image: poktnetwork/pocket-core:staging-latest
+                    imagePullPolicy: Always
+                    env:
+                      - name: POCKET_CORE_CHAINS
+                        valueFrom:
+                            configMapKeyRef:
+                                name: pocket-core-testnet
+                                key: pocket_core_chains
+                      - name: POCKET_CORE_PASSPHRASE
+                        valueFrom:
+                            configMapKeyRef:
+                                name: pocket-core-testnet
+                                key: pocket_core_passphrase
+                      - name: POCKET_ADDRESS
+                        valueFrom:
+                            configMapKeyRef:
+                                name: pocket-core-testnet
+                                key: pocket_address
+                      - name: POCKET_CORE_SEEDS
+                        valueFrom:
+                            configMapKeyRef:
+                                name: pocket-core-testnet
+                                key: pocket_core_seeds
+                      - name: POCKET_CORE_GENESIS
+                        valueFrom:
+                            configMapKeyRef:
+                                name: pocket-core-testnet
+                                key: pocket_core_genesis
+                      - name: POCKET_CORE_KEY
+                        value: 9ce09fc721086005ddfb050176c2303fd3c1b6af0d5dcfcb8c46b9aca1b1b0ab0dc399a8bdc703d22c6d45f68ff761b16d0a51d2e7c27506ae9d99fd8fcdf190
+                    ports:
+                      - containerPort: "8081"
+                      - containerPort: "46656"
+                      - containerPort: "26656"
+                      - containerPort: "26657"
+                    resources:
+                        limits:
+                            cpu: 500m
+                            memory: 500Mi
+                        requests:
+                            cpu: 250m
+                            memory: 300Mi
+                    restartPolicy: Always
+                    nodeSelector:
+                        cloud.google.com/gke-nodepool: pocket-core
+                    terminationGracePeriodSeconds: "90"
+  - apiVersion: v1
+    kind: ConfigMap
+    metadata:
+        name: pocket-core-testnet
+        resourceVersion: "1"
+    data:
+        pocket_core_seeds: '0dc399a8bdc703d22c6d45f68ff761b16d0a51d2e7c27506ae9d99fd8fcdf190@pocket-core-testnet:26656, '
+        pocket_core_passphrase: VVb4HgtVQGOKhj7UOnJq
+        pocket_address: ""
+        pocket_core_chains: |-
+            [
+                {
+                    "id": "0022",
+                    "url": "http://foo.bar:5544",
+                    "basic_auth": {
+                        "username": "",
+                        "password": ""
+                    }
+                }
+            ]
+        pocket_core_genesis: |-
+            {
+              "genesis_time": "2020-07-21T14:28:35.289641Z",
+              "chain_id": "pocket-testet-playground",
+              "consensus_params": {
+                "block": {
+                  "max_bytes": "15000",
+                  "max_gas": "-1",
+                  "time_iota_ms": "1"
+                },
+                "evidence": {
+                  "max_age": "1000000"
+                },
+                "validator": {
+                  "pub_key_types": [
+                    "ed25519"
+                  ]
+                }
+              },
+              "app_hash": "",
+              "app_state": {
+                "application": {
+                  "params": {
+                    "unstaking_time": "1814400000000000",
+                    "max_applications": "9223372036854775807",
+                    "app_stake_minimum": "1000000",
+                    "base_relays_per_pokt": "100",
+                    "stability_adjustment": "0",
+                    "participation_rate_on": false,
+                    "maximum_chains": "15"
+                  },
+                  "applications": null,
+                  "exported": false
+                },
+                "auth": {
+                  "params": {
+                    "max_memo_characters": "256",
+                    "tx_sig_limit": "7",
+                    "fee_multipliers": {
+                      "fee_multiplier": null,
+                      "default": "1"
+                    }
+                  },
+                  "accounts": [
+                    {
+                      "type": "posmint/Account",
+                      "value": {
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1",
+                        "coins": [
+                          {
+                            "denom": "upokt",
+                            "amount": "1000000000"
+                          }
+                        ],
+                        "public_key": {
+                          "type": "crypto/ed25519_public_key",
+                          "value": "0dc399a8bdc703d22c6d45f68ff761b16d0a51d2e7c27506ae9d99fd8fcdf190"
+                        }
+                      }
+                    }
+                  ],
+                  "supply": []
+                },
+                "pos": {
+                  "params": {
+                    "relays_to_tokens_multiplier": "1000",
+                    "unstaking_time": "1814400000000000",
+                    "max_validators": "5000",
+                    "stake_denom": "upokt",
+                    "stake_minimum": "1000000",
+                    "session_block_frequency": "25",
+                    "dao_allocation": "10",
+                    "proposer_allocation": "1",
+                    "maximum_chains": "15",
+                    "max_jailed_blocks": "1000",
+                    "max_evidence_age": "120000000000",
+                    "signed_blocks_window": "100",
+                    "min_signed_per_window": "0.500000000000000000",
+                    "downtime_jail_duration": "600000000000",
+                    "slash_fraction_double_sign": "0.050000000000000000",
+                    "slash_fraction_downtime": "0.010000000000000000"
+                  },
+                  "prevState_total_power": "0",
+                  "prevState_validator_powers": null,
+                  "validators": [
+                    {
+                      "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1",
+                      "public_key": "0dc399a8bdc703d22c6d45f68ff761b16d0a51d2e7c27506ae9d99fd8fcdf190",
+                      "jailed": false,
+                      "status": 2,
+                      "tokens": "1000000000",
+                      "service_url": "http://www.pocket-core-testnet0:8081",
+                      "chains": [
+                        "0011",
+                        "0022"
+                      ],
+                      "unstaking_time": "0001-01-01T00:00:00Z"
+                    }
+                  ],
+                  "exported": false,
+                  "signing_infos": {},
+                  "missed_blocks": {},
+                  "previous_proposer": ""
+                },
+                "gov": {
+                  "params": {
+                    "acl": [
+                      {
+                        "acl_key": "application/ApplicationStakeMinimum",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "application/AppUnstakingTime",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "application/BaseRelaysPerPOKT",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "application/MaxApplications",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "application/MaximumChains",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "application/ParticipationRateOn",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "application/StabilityAdjustment",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "auth/MaxMemoCharacters",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "auth/TxSigLimit",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "gov/acl",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "gov/daoOwner",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "gov/upgrade",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "pocketcore/ClaimExpiration",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "auth/FeeMultipliers",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "pocketcore/ReplayAttackBurnMultiplier",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "pos/ProposerPercentage",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "pocketcore/ClaimSubmissionWindow",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "pocketcore/MinimumNumberOfProofs",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "pocketcore/SessionNodeCount",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "pocketcore/SupportedBlockchains",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "pos/BlocksPerSession",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "pos/DAOAllocation",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "pos/DowntimeJailDuration",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "pos/MaxEvidenceAge",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "pos/MaximumChains",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "pos/MaxJailedBlocks",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "pos/MaxValidators",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "pos/MinSignedPerWindow",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "pos/RelaysToTokensMultiplier",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "pos/SignedBlocksWindow",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "pos/SlashFractionDoubleSign",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "pos/SlashFractionDowntime",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "pos/StakeDenom",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "pos/StakeMinimum",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      },
+                      {
+                        "acl_key": "pos/UnstakingTime",
+                        "address": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1"
+                      }
+                    ],
+                    "dao_owner": "5f85bf95aaf3d2f7718570b522fe429a0a90d7c1",
+                    "upgrade": {
+                      "Height": "0",
+                      "Version": "0.0.0"
+                    }
+                  },
+                  "DAO_Tokens": "0"
+                },
+                "pocketcore": {
+                  "params": {
+                    "session_node_count": "5",
+                    "proof_waiting_period": "3",
+                    "supported_blockchains": [
+                      "00",
+                      "0011",
+                      "0022"
+                    ],
+                    "claim_expiration": "100",
+                    "replay_attack_burn_multiplier": "3",
+                    "minimum_number_of_proofs": "5"
+                  },
+                  "receipts": null,
+                  "claims": null
+                }
+              }
+            }
+kind: List
+metadata: {}

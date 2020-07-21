@@ -29,7 +29,8 @@ RUN mkdir -p ${POCKET_PATH}
 WORKDIR $POCKET_PATH
 
 # Creating the BRANCH_NAME variable
-ARG BRANCH_NAME="staging"
+#ARG BRANCH_NAME="staging"
+ARG BRANCH_NAME="issue-lowmempocket"
 
 # Copying deps sh to tmp folder
 COPY deps.sh /tmp/
